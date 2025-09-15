@@ -1,0 +1,91 @@
+/* Apply the new font and a subtle gradient background to the page container */
+.page-container {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem;
+}
+
+/* --- Main Card Styles --- */
+/* This is the container for our form, giving it a modern "glassmorphism" feel */
+.detection-card {
+    max-width: 600px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    padding: 2.5rem;
+}
+
+/* --- Custom File Drop Zone --- */
+.file-drop-zone {
+    border: 2px dashed #a8b2c5;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.file-drop-zone:hover {
+    border-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+/* This style applies when a user is dragging a file over the drop zone */
+.file-drop-zone.drag-over {
+    border-color: #28a745;
+    border-style: solid;
+    background-color: rgba(40, 167, 69, 0.1);
+    transform: scale(1.02);
+}
+
+.file-drop-zone p {
+    margin: 0;
+    color: #555;
+    font-weight: 300;
+}
+
+.file-drop-zone .upload-icon {
+    font-size: 3rem;
+    color: #a8b2c5;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.file-drop-zone:hover .upload-icon {
+    color: #28a745;
+}
+
+/* Hide the ugly default file input */
+.file-drop-zone input[type="file"] {
+    display: none;
+}
+
+
+/* --- Image Preview --- */
+.image-preview {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.image-preview img {
+    max-height: 200px;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Button and Other Form Styles --- */
+.btn-submit {
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.form-select-lg {
+    border-radius: 8px;
+}

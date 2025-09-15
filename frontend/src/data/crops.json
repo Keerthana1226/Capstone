@@ -1,0 +1,19 @@
+[
+    {
+      "crop": "Tomato",
+      "image": "https://example.com/tomato.jpg",
+      "companions": [
+        { "name": "Basil", "image": "https://example.com/basil.jpg" },
+        { "name": "Carrot", "image": "https://example.com/carrot.jpg" }
+      ]
+    },
+    {
+      "crop": "Corn",
+      "image": "https://example.com/corn.jpg",
+      "companions": [
+        { "name": "Beans", "image": "https://example.com/beans.jpg" },
+        { "name": "Cucumber", "image": "https://example.com/cucumber.jpg" }
+      ]
+    }
+  ]
+

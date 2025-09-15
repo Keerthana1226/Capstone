@@ -1,0 +1,41 @@
+.feature-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    
+    /* Ensuring equal height for all cards */
+    min-height: 250px; /* You can adjust based on your content */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space */
+    padding: 1.5rem;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+  
+  .feature-card .card-title {
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card .btn {
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+  }
+  
+  .homepage-container {
+    padding-bottom: 3rem;
+  }
+  
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
