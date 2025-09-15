@@ -14,7 +14,7 @@ with open('crop_data.json') as f:
 env = CropRotationEnv(crop_data)
 
 # Hyperparameters
-episodes = 5000
+episodes = 100000
 alpha = 0.1       # Learning rate
 gamma = 0.9       # Discount factor
 epsilon = 1.0     # Initial exploration rate

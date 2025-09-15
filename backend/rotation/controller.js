@@ -1,12 +1,16 @@
 const path = require('path');
 const { spawn } = require('child_process');
 
+// POST /api/rotation-plan/run-recommendation
 exports.runCropRecommendation = (req, res) => {
   const { last_crop, month, season } = req.body;
 
-  const scriptPath = path.join(__dirname, 'rl', 'recommend_crop.py'); // ✅ Corrected path
+  if (!last_crop) {
+    return res.status(400).json({ error: 'Missing last_crop in request body' });
+  }
 
-  const pyProcess = spawn('python', [scriptPath]);
+  const scriptPath = path.join(__dirname, 'rl', 'recommend_crop.py');
+  const pyProcess = spawn('python', [scriptPath, '--json']); // ✅ ensure JSON output
 
   let output = '';
   let errorOutput = '';
@@ -19,24 +23,35 @@ exports.runCropRecommendation = (req, res) => {
     errorOutput += data.toString();
   });
 
+  // ✅ Properly formatted input to Python script
   pyProcess.stdin.write(`${last_crop}\n`);
   if (month) {
     pyProcess.stdin.write(`${month}\n`);
   } else if (season) {
     pyProcess.stdin.write(`${season}\n`);
+  } else {
+    pyProcess.stdin.write(`\n`);
   }
   pyProcess.stdin.end();
 
   pyProcess.on('close', (code) => {
     if (errorOutput) {
-      return res.status(500).json({ error: errorOutput });
+      console.error('❌ Python error:', errorOutput);
     }
 
     try {
       const parsed = JSON.parse(output);
-      res.status(200).json(parsed);
+      if (parsed.error) {
+        return res.status(400).json({ error: parsed.error });
+      }
+      return res.status(200).json(parsed); // { recommendations: [...] }
     } catch (err) {
-      res.status(500).json({ error: 'Invalid response from Python script', raw: output });
+      console.error('❌ Failed to parse Python output:', err.message);
+      console.error('Raw output was:', output);
+      return res.status(500).json({
+        error: 'Failed to parse output from Python script.',
+        raw: output
+      });
     }
   });
 };

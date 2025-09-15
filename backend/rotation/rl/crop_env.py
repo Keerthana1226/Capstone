@@ -12,22 +12,19 @@ class CropRotationEnv(gym.Env):
         self.idx_to_crop = {idx: crop for crop, idx in self.crop_to_idx.items()}
 
         self.num_crops = len(self.crop_list)
-        self.start_month = start_month  # Can be None to allow random initialization
+        self.start_month = start_month
         self.max_steps = max_steps
 
-        # Month (1-12), crop idx (+1 for None)
         self.observation_space = spaces.MultiDiscrete([12, self.num_crops + 1])
         self.action_space = spaces.Discrete(self.num_crops)
 
         self.reset()
 
     def reset(self):
-        # If no start month specified or if we want to randomize for better coverage
         if self.start_month is None:
-            self.month = np.random.randint(1, 13)  # Random month from 1-12
+            self.month = np.random.randint(1, 13)
         else:
             self.month = self.start_month
-        
         self.current_crop = None
         self.prev_crop = None
         self.steps = 0
@@ -49,7 +46,7 @@ class CropRotationEnv(gym.Env):
             return "Summer"
         elif month in [9, 10, 11]:
             return "Fall"
-        else:  # 12, 1, 2
+        else:
             return "Winter"
 
     def step(self, action):
@@ -64,31 +61,27 @@ class CropRotationEnv(gym.Env):
             "season": self.get_season(self.month)
         }
 
-        # Check if this is a good planting month
         if self.month not in crop_info.get("planting_months", []):
-            reward -= 5
+            reward -= 3
             info["wrong_planting_month"] = True
         else:
-            # Check crop rotation compatibility
             if self.prev_crop:
                 successor_crops = self.crop_data[self.prev_crop].get("successor_crops", [])
-                if selected_crop not in successor_crops:
+                if selected_crop in successor_crops:
+                    reward += 5
+                    info["good_successor"] = True
+                else:
                     reward -= 2
                     info["poor_succession"] = True
-                
-                # Avoid planting from same family
+
                 if self.crop_data[selected_crop].get("family") == self.crop_data[self.prev_crop].get("family"):
                     reward -= 1
                     info["same_family"] = True
-            
-            # Base reward for suitable crop
+
             reward += 10
-            
-            # Update crop history
             self.prev_crop = self.current_crop
             self.current_crop = selected_crop
-            
-            # Update time based on crop grow duration
+
             grow_duration = crop_info.get("grow_duration", 1)
             self._advance_time(grow_duration)
 
@@ -99,15 +92,13 @@ class CropRotationEnv(gym.Env):
         return self._get_obs(), reward, done, info
 
     def set_month(self, month):
-        """Allow setting the month directly for exploration purposes"""
         if 1 <= month <= 12:
             self.month = month
         else:
             raise ValueError("Month must be between 1 and 12")
         return self._get_obs()
-    
+
     def set_crop(self, crop_name):
-        """Allow setting the current crop directly for exploration purposes"""
         if crop_name in self.crop_list:
             self.current_crop = crop_name
         elif crop_name is None:
