@@ -9,7 +9,7 @@ exports.detectDisease = (req, res) => {
   
   // The absolute path to your Python executable. This makes the code robust.
   // Make sure this path is correct for your system.
-  const pythonExecutable = 'C:\\Program Files\\Python312\\python.exe';
+  const pythonExecutable = 'C:\\Users\\Dell\\AppData\\Local\\Programs\\Python\\Python311\\python.exe';
   
   // The absolute path to the Python script we want to run.
   const scriptPath = path.join(__dirname, 'predict.py');

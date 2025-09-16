@@ -23,7 +23,8 @@ CLASS_NAMES = {
         'leaf_scald', 'narrow_brown_spot', 'neck_blast', 'rice_hispa',
         'sheath_blight', 'tungro'
     ],
-    'wheat': ['Wheat___Brown_Rust', 'Wheat___Healthy', 'Wheat___Yellow_Rust']
+    'wheat': ['Aphid', 'Black_Rust', 'Blast', 'Brown_Rust', 'Common_root_rot', 'Fusarium Head Blight', 
+              'Healthy', 'Leaf_Blight', 'Mildew', 'Mite','Septoria', 'Smut', 'Stem_fly', 'Tanspot', 'Yellow_Rust']
 }
 
 # --- Model Paths ---
